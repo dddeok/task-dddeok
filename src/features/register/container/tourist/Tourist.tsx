@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 import LabelInput from '../../components/input/LabelInput';
 import GenderLadio from '../../components/radio/GenderRadio';
-import { isNumberValidation } from '../../function/validation/isNumberValidation';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e7;
   padding: 20px 0px;
   .tourist-title {
     font-size: 20px;
@@ -25,9 +25,6 @@ const Container = styled.div`
     display: flex;
     padding-bottom: 20px;
   }
-  .tourist-korName {
-    display: flex;
-  }
 `;
 
 const TouristInput = styled(LabelInput)`
@@ -35,16 +32,12 @@ const TouristInput = styled(LabelInput)`
 `;
 
 interface Props {
-  firstName: string;
-  lastName: string;
-  korName: string;
-  gender: string;
-  birthday: string;
-  firstNameError?: string;
-  lastNameError?: string;
-  korNameError?: string;
-  genderError?: string;
-  birthdayError?: string;
+  firstName: { value: string; isValid: string };
+  lastName: { value: string; isValid: string };
+  korName: { value: string; isValid: string };
+  gender: { value: string; isValid: string };
+  birthday: { value: string; isValid: string };
+
   onFirstNameChange: (value: string) => void;
   onLastNameChange: (value: string) => void;
   onKorNameChange: (value: string) => void;
@@ -57,11 +50,7 @@ const Tourist = ({
   korName,
   gender,
   birthday,
-  firstNameError,
-  lastNameError,
-  korNameError,
-  genderError,
-  birthdayError,
+
   onFirstNameChange,
   onLastNameChange,
   onKorNameChange,
@@ -77,15 +66,15 @@ const Tourist = ({
       <div className="tourist-information">
         <TouristInput
           title="영문 이름"
-          value={firstName}
-          error={firstNameError}
+          value={firstName.value}
+          error={firstName.isValid}
           onChange={onFirstNameChange}
           placeholder="Gil Dong"
         />
         <TouristInput
           title="영문 성"
-          value={lastName}
-          error={lastNameError}
+          value={lastName.value}
+          error={lastName.isValid}
           placeholder="Hong"
           onChange={onLastNameChange}
         />
@@ -93,21 +82,25 @@ const Tourist = ({
       <div className="tourist-information">
         <TouristInput
           title="한글 이름"
-          value={korName}
-          error={korNameError}
+          value={korName.value}
+          error={korName.isValid}
           placeholder="홍길동"
           onChange={onKorNameChange}
         />
       </div>
       <div className="tourist-information">
-        <GenderLadio value={gender} onChange={onGenderChange} />
+        <GenderLadio
+          value={gender.value}
+          error={gender.isValid}
+          onChange={onGenderChange}
+        />
       </div>
       <div className="tourist-information">
         <TouristInput
           title="생년월일"
           placeholder="881225"
-          value={birthday}
-          error={birthdayError}
+          value={birthday.value}
+          error={birthday.isValid}
           onChange={onBirthdayChange}
         />
       </div>

@@ -10,3 +10,9 @@ export interface Tourist {
 export interface TouristEntity {
   [id: number]: Tourist;
 }
+
+export interface Applicant {
+  userName: { value: string; isValid: string };
+  phoneNumber: { value: string; isValid: string };
+  reservation: { value: string; isValid: string };
+}
