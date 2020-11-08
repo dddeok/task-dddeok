@@ -54,8 +54,12 @@ const LabelTextArea = ({
 }: Props) => {
   const isValid = error ? true : false;
   return (
-    <Container>
-      <span className="label-textarea-title">{title}</span>
+    <Container className={className}>
+      {error ? (
+        <span className="label-textarea-error">{error}</span>
+      ) : (
+        <span className="label-textarea-title">{title}</span>
+      )}
       <TextArea
         isValid={isValid}
         spellCheck={false}

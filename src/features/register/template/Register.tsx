@@ -3,12 +3,16 @@ import styled from 'styled-components';
 
 import Tourist from '../container/tourist/Tourist';
 import Applicant from '../container/applicant/Applicant';
+import ApplicantAgreement from '../container/applicant/ApplicantAgreement';
 import useTourist from '../function/hook/useTourist.hook';
 import useApplicant from '../function/hook/useApplicant.hook';
+import useAgreement from '../function/hook/useAgreement.hook';
+import { PrimaryButton } from '../components/button/PrimaryButton';
 import { isEnglishNameValidation } from '../function/validation/isEnglishNameValidation';
 import { isKorNameValidation } from '../function/validation/isKorNameValidation';
 import { isBirthDayValidation } from '../function/validation/isBirthdayValidation';
 import { isPhoneNumberValidation } from '../function/validation/isPhoneNumberValidation';
+import { isReservationValidation } from '../function/validation/isReservationValidation';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,6 +42,14 @@ const RegisterForm = styled.div`
 const Register = () => {
   const { ids, entities, setIds, setEntities } = useTourist();
   const { applicant, setApplicant } = useApplicant();
+  const {
+    entire,
+    required,
+    option,
+    onEntireChange,
+    onRequiredChange,
+    onOptionChange,
+  } = useAgreement();
   const { userName, phoneNumber, reservation } = applicant;
   function onFirstNameChange(id: number, firstName: string) {
     const { error } = isEnglishNameValidation(firstName);
@@ -118,7 +130,7 @@ const Register = () => {
   }
 
   function onReservationChange(reservation: string) {
-    const { error } = isEnglishNameValidation(reservation);
+    const { error } = isReservationValidation(reservation);
     setApplicant({
       ...applicant,
       reservation: {
@@ -158,6 +170,15 @@ const Register = () => {
           onPhoneNumberChange={onPhoneNumberChange}
           onReservationChange={onReservationChange}
         />
+        <ApplicantAgreement
+          isEntire={entire}
+          isRequired={required}
+          isOption={option}
+          onEntireChange={onEntireChange}
+          onRequiredChange={onRequiredChange}
+          onOptionChange={onOptionChange}
+        />
+        <PrimaryButton disabled={!required}>결제하기</PrimaryButton>
       </RegisterForm>
     </Container>
   );

@@ -82,7 +82,7 @@ const Applicant = ({
           value={reservation.value}
           error={reservation.isValid}
           onChange={onReservationChange}
-          placeholder={'"-" 없이 입력해주세요'}
+          placeholder={'답변을 입력해주세요.'}
         />
       </div>
     </Container>
