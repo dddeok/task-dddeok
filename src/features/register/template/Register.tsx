@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Tourist from '../container/tourist/Tourist';
@@ -46,14 +46,21 @@ const Register = () => {
     onKorNameChange,
     onGenderChange,
     onBirthdayChange,
+    onToristCheck,
   } = useTourist();
   const {
     applicant,
     onUserNameChange,
     onPhoneNumberChange,
     onReservationChange,
+    onApplicantCheck,
   } = useApplicant();
-  const { arriveTime, onChnageHour, onChnageMinute } = useApplicantArriveTime();
+  const {
+    arriveTime,
+    onChnageHour,
+    onChnageMinute,
+    onApplicantArriveTimeCheck,
+  } = useApplicantArriveTime();
   const {
     entire,
     required,
@@ -63,6 +70,13 @@ const Register = () => {
     onOptionChange,
   } = useAgreement();
   const { userName, countryNumber, phoneNumber, reservation } = applicant;
+  const [isError, setIsError] = useState(false);
+
+  function onSumbit() {
+    onToristCheck();
+    onApplicantCheck();
+    onApplicantArriveTimeCheck();
+  }
 
   return (
     <Container>
@@ -107,7 +121,9 @@ const Register = () => {
           onRequiredChange={onRequiredChange}
           onOptionChange={onOptionChange}
         />
-        <PrimaryButton disabled={!required}>결제하기</PrimaryButton>
+        <PrimaryButton disabled={!required} onClick={onSumbit}>
+          결제하기
+        </PrimaryButton>
       </RegisterForm>
     </Container>
   );

@@ -7,7 +7,7 @@ import { isReservationValidation } from '../../function/validation/isReservation
 const useApplicant = () => {
   const [applicant, setApplicant] = useState<Applicant>({
     userName: { value: '', isValid: '' },
-    countryNumber: { value: '', isValid: '' },
+    countryNumber: { value: '82', isValid: '' },
     phoneNumber: { value: '', isValid: '' },
     reservation: { value: '', isValid: '' },
   });
@@ -47,11 +47,53 @@ const useApplicant = () => {
       },
     });
   }
+
+  function onApplicantCheck() {
+    let newApplicant: Applicant = {
+      userName: {
+        value: '',
+        isValid: '',
+      },
+      phoneNumber: {
+        value: '',
+        isValid: '',
+      },
+      countryNumber: {
+        value: '82',
+        isValid: '',
+      },
+      reservation: {
+        value: '',
+        isValid: '',
+      },
+    };
+    const userNameError = isEnglishNameValidation(applicant.userName.value);
+    const phoneNumberError = isPhoneNumberValidation(applicant.phoneNumber.value);
+    const reservationError = isReservationValidation(applicant.reservation.value);
+    newApplicant = {
+      ...applicant,
+      userName: {
+        ...applicant.userName,
+        isValid: userNameError.error,
+      },
+      phoneNumber: {
+        ...applicant.phoneNumber,
+        isValid: phoneNumberError.error,
+      },
+      reservation: {
+        ...applicant.reservation,
+        isValid: reservationError.error,
+      },
+    };
+
+    setApplicant(newApplicant);
+  }
   return {
     applicant,
     onUserNameChange,
     onPhoneNumberChange,
     onReservationChange,
+    onApplicantCheck,
   };
 };
 

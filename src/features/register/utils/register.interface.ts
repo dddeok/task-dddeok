@@ -1,5 +1,5 @@
 export interface Tourist {
-  id: number;
+  id: string;
   firstName: { value: string; isValid: string };
   lastName: { value: string; isValid: string };
   korName: { value: string; isValid: string };
@@ -8,7 +8,7 @@ export interface Tourist {
 }
 
 export interface TouristEntity {
-  [id: number]: Tourist;
+  [id: string]: Tourist;
 }
 
 export interface Applicant {

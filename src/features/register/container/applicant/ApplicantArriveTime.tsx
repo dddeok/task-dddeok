@@ -23,21 +23,30 @@ const Container = styled.div`
 
 interface Props {
   arriveTime: {
-    hour: string;
-    minute: string;
-    isValid: string;
+    hour: { value: string; isValid: string };
+    minute: { value: string; isValid: string };
   };
   onChnageHour: (value: string) => void;
   onChnageMinute: (value: string) => void;
 }
 const ApplicantArriveTime = ({ arriveTime, onChnageMinute, onChnageHour }: Props) => {
-  const { hour, minute, isValid } = arriveTime;
+  const { hour, minute } = arriveTime;
   return (
     <Container>
       <span className="applicant-arriveTime-title">숙소 도착 예정 시간</span>
       <div className="applicant-arriveTime-informations">
-        <CommonSelect value={hour} options={hours} onChange={onChnageHour} />
-        <CommonSelect value={minute} options={minutes} onChange={onChnageMinute} />
+        <CommonSelect
+          value={hour.value}
+          error={hour.isValid}
+          options={hours}
+          onChange={onChnageHour}
+        />
+        <CommonSelect
+          value={minute.value}
+          error={minute.isValid}
+          options={minutes}
+          onChange={onChnageMinute}
+        />
       </div>
     </Container>
   );

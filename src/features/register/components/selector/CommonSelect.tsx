@@ -13,6 +13,11 @@ const Container = styled.div`
     height: 30px;
     color: #929399;
   }
+  .common-select-error {
+    font-size: 14px;
+    color: #ff4d4f;
+    height: 30px;
+  }
 `;
 
 const Select = styled.select`
@@ -28,15 +33,27 @@ interface Props {
   className?: string;
   value: string | number;
   title?: string;
+  error?: string;
   options: { title: string; value: string }[];
   width?: number;
   onChange: (value: string) => void;
 }
-const CommonSelect = ({ className, width, value, title, options, onChange }: Props) => {
+const CommonSelect = ({
+  className,
+  width,
+  value,
+  title,
+  error,
+  options,
+  onChange,
+}: Props) => {
   return (
     <Container className={className} width={width}>
-      <span className="common-select-title">{title}</span>
-
+      {error ? (
+        <span className="common-select-error">{error}</span>
+      ) : (
+        <span className="common-select-title">{title}</span>
+      )}
       <Select value={value} onChange={e => onChange(e.target.value)}>
         {options.map((option, index) => {
           const { title, value } = option;
