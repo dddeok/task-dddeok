@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import LabelInput from '../../components/input/LabelInput';
 import LabelTextArea from '../../components/input/LabelTextArea';
+import CommonSelect from '../../components/selector/CommonSelect';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -29,9 +30,13 @@ const Container = styled.div`
 
 const ApplicantInput = styled(LabelInput)``;
 const ApplicantTextArea = styled(LabelTextArea)``;
-
+const defualtCountry = [{ title: '+82 (대한민국)', value: '82' }];
 interface Props {
   userName: {
+    value: string;
+    isValid: string;
+  };
+  countryNumber: {
     value: string;
     isValid: string;
   };
@@ -49,6 +54,7 @@ interface Props {
 }
 const Applicant = ({
   userName,
+  countryNumber,
   phoneNumber,
   reservation,
   onUserNameChnage,
@@ -68,6 +74,13 @@ const Applicant = ({
         />
       </div>
       <div className="applicant-information">
+        <CommonSelect
+          value={countryNumber.value}
+          width={100}
+          title="핸드폰 번호"
+          options={defualtCountry}
+          onChange={() => null}
+        />
         <ApplicantInput
           value={phoneNumber.value}
           error={phoneNumber.isValid}

@@ -13,6 +13,7 @@ export interface TouristEntity {
 
 export interface Applicant {
   userName: { value: string; isValid: string };
+  countryNumber: { value: string; isValid: string };
   phoneNumber: { value: string; isValid: string };
   reservation: { value: string; isValid: string };
 }

@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import Tourist from '../container/tourist/Tourist';
 import Applicant from '../container/applicant/Applicant';
 import ApplicantAgreement from '../container/applicant/ApplicantAgreement';
+import ApplicantArriveTime from '../container/applicant/ApplicantArriveTime';
 import useTourist from '../function/hook/useTourist.hook';
 import useApplicant from '../function/hook/useApplicant.hook';
 import useAgreement from '../function/hook/useAgreement.hook';
+import useApplicantArriveTime from '../function/hook/useApplicantArriveTime.hook';
 import { PrimaryButton } from '../components/button/PrimaryButton';
-import { isEnglishNameValidation } from '../function/validation/isEnglishNameValidation';
-import { isKorNameValidation } from '../function/validation/isKorNameValidation';
-import { isBirthDayValidation } from '../function/validation/isBirthdayValidation';
-import { isPhoneNumberValidation } from '../function/validation/isPhoneNumberValidation';
-import { isReservationValidation } from '../function/validation/isReservationValidation';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -40,8 +38,22 @@ const RegisterForm = styled.div`
 `;
 
 const Register = () => {
-  const { ids, entities, setIds, setEntities } = useTourist();
-  const { applicant, setApplicant } = useApplicant();
+  const {
+    ids,
+    entities,
+    onFirstNameChange,
+    onLastNameChange,
+    onKorNameChange,
+    onGenderChange,
+    onBirthdayChange,
+  } = useTourist();
+  const {
+    applicant,
+    onUserNameChange,
+    onPhoneNumberChange,
+    onReservationChange,
+  } = useApplicant();
+  const { arriveTime, onChnageHour, onChnageMinute } = useApplicantArriveTime();
   const {
     entire,
     required,
@@ -50,96 +62,7 @@ const Register = () => {
     onRequiredChange,
     onOptionChange,
   } = useAgreement();
-  const { userName, phoneNumber, reservation } = applicant;
-  function onFirstNameChange(id: number, firstName: string) {
-    const { error } = isEnglishNameValidation(firstName);
-    setEntities({
-      ...entities,
-      [id]: {
-        ...entities[id],
-        firstName: {
-          ...entities[id].firstName,
-          value: firstName,
-          isValid: error,
-        },
-      },
-    });
-  }
-  function onLastNameChange(id: number, lastName: string) {
-    const { error } = isEnglishNameValidation(lastName);
-    setEntities({
-      ...entities,
-      [id]: {
-        ...entities[id],
-        lastName: { ...entities[id].lastName, value: lastName, isValid: error },
-      },
-    });
-  }
-  function onKorNameChange(id: number, korName: string) {
-    const { error } = isKorNameValidation(korName);
-    setEntities({
-      ...entities,
-      [id]: {
-        ...entities[id],
-        korName: { ...entities[id].korName, value: korName, isValid: error },
-      },
-    });
-  }
-  function onGenderChange(id: number, gender: string) {
-    setEntities({
-      ...entities,
-      [id]: {
-        ...entities[id],
-        gender: { ...entities[id].gender, value: gender },
-      },
-    });
-  }
-  function onBirthdayChange(id: number, birthday: string) {
-    const { error } = isBirthDayValidation(birthday);
-    setEntities({
-      ...entities,
-      [id]: {
-        ...entities[id],
-        birthday: { ...entities[id].birthday, value: birthday, isValid: error },
-      },
-    });
-  }
-
-  function onUserNameChange(userName: string) {
-    const { error } = isEnglishNameValidation(userName);
-    setApplicant({
-      ...applicant,
-      userName: {
-        ...applicant.userName,
-        value: userName,
-        isValid: error,
-      },
-    });
-  }
-
-  function onPhoneNumberChange(phoneNumber: string) {
-    const { error } = isPhoneNumberValidation(phoneNumber);
-    setApplicant({
-      ...applicant,
-      phoneNumber: {
-        ...applicant.phoneNumber,
-        value: phoneNumber,
-        isValid: error,
-      },
-    });
-  }
-
-  function onReservationChange(reservation: string) {
-    const { error } = isReservationValidation(reservation);
-    setApplicant({
-      ...applicant,
-      reservation: {
-        ...applicant.reservation,
-        value: reservation,
-        isValid: error,
-      },
-    });
-  }
+  const { userName, countryNumber, phoneNumber, reservation } = applicant;
 
   return (
     <Container>
@@ -162,10 +85,16 @@ const Register = () => {
             />
           );
         })}
+        <ApplicantArriveTime
+          arriveTime={arriveTime}
+          onChnageHour={onChnageHour}
+          onChnageMinute={onChnageMinute}
+        />
         <Applicant
           userName={userName}
           phoneNumber={phoneNumber}
           reservation={reservation}
+          countryNumber={countryNumber}
           onUserNameChnage={onUserNameChange}
           onPhoneNumberChange={onPhoneNumberChange}
           onReservationChange={onReservationChange}
