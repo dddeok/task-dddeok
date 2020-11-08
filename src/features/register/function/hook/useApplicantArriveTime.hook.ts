@@ -61,6 +61,7 @@ const useApplicantArriveTime = () => {
       },
     };
     setArriveTime(newArriveTime);
+    if (newArriveTime.hour.isValid || newArriveTime.minute.isValid) return true;
   }
 
   return {

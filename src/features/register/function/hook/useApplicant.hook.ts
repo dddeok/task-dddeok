@@ -87,6 +87,12 @@ const useApplicant = () => {
     };
 
     setApplicant(newApplicant);
+    if (
+      newApplicant.userName.isValid ||
+      newApplicant.phoneNumber.isValid ||
+      newApplicant.reservation.isValid
+    )
+      return true;
   }
   return {
     applicant,

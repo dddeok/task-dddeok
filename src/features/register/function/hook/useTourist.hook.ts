@@ -8,7 +8,7 @@ import { isGenderValidation } from '../../function/validation/isGenderValidation
 const useTourist = () => {
   const [ids, setIds] = useState<string[]>(['0', '1']);
   const [entities, setEntities] = useState<TouristEntity>({
-    ['0']: {
+    [0]: {
       id: '0',
       firstName: { value: '', isValid: '' },
       lastName: { value: '', isValid: '' },
@@ -16,7 +16,7 @@ const useTourist = () => {
       gender: { value: '', isValid: '' },
       birthday: { value: '', isValid: '' },
     },
-    ['1']: {
+    [1]: {
       id: '1',
       firstName: { value: '', isValid: '' },
       lastName: { value: '', isValid: '' },
@@ -86,7 +86,7 @@ const useTourist = () => {
   }
 
   function onToristCheck() {
-    let newEntiteis = {};
+    let newEntiteis: TouristEntity = {};
     ids.map(id => {
       const firstNameError = isEnglishNameValidation(entities[id].firstName.value);
       const lastNameError = isEnglishNameValidation(entities[id].lastName.value);
@@ -121,6 +121,14 @@ const useTourist = () => {
       };
     });
     setEntities(newEntiteis);
+    const isError = ids.map(id => {
+      if (newEntiteis[id].firstName.isValid) return true;
+      else if (newEntiteis[id].lastName.isValid) return true;
+      else if (newEntiteis[id].korName.isValid) return true;
+      else if (newEntiteis[id].gender.isValid) return true;
+      else if (newEntiteis[id].birthday.isValid) return true;
+    });
+    return isError;
   }
 
   return {

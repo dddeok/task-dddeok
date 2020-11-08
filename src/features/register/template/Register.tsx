@@ -70,12 +70,14 @@ const Register = () => {
     onOptionChange,
   } = useAgreement();
   const { userName, countryNumber, phoneNumber, reservation } = applicant;
-  const [isError, setIsError] = useState(false);
 
   function onSumbit() {
-    onToristCheck();
-    onApplicantCheck();
-    onApplicantArriveTimeCheck();
+    const touristCheck = onToristCheck();
+    const applicantCheck = onApplicantCheck();
+    const arriveTiemCheck = onApplicantArriveTimeCheck();
+    if (touristCheck.find(check => check == true)) return;
+    else if (applicantCheck || arriveTiemCheck) return;
+    else alert('성공!');
   }
 
   return (

@@ -52,6 +52,7 @@ const LabelInput = ({ className, title, error, placeholder, value, onChange }: P
         <span className="label-input-title">{title}</span>
       )}
       <TextInput
+        autoFocus={isValid}
         isValid={isValid}
         spellCheck={false}
         placeholder={placeholder}
